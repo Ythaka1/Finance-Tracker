@@ -32,7 +32,7 @@ def add_transaction():
     description = get_description()
 
     try:
-        # Converting the  date format
+        # Converting the date format
         formatted_date = datetime.strptime(date, "%d-%m-%Y").date()
 
         transaction = Transaction(
@@ -55,9 +55,10 @@ def add_transaction():
 
 
 def get_transactions(start_date, end_date):
+    session = SessionLocal()
     try:
-        start_date = datetime.strptime(start_date, "%d-%m-%Y")
-        end_date = datetime.strptime(end_date, "%d-%m-%Y")
+        start_date = datetime.strptime(start_date, "%d-%m-%Y").date()
+        end_date = datetime.strptime(end_date, "%d-%m-%Y").date()
         transactions = session.query(Transaction).filter(Transaction.date >= start_date, Transaction.date <= end_date).all()
 
         if not transactions:
@@ -65,41 +66,42 @@ def get_transactions(start_date, end_date):
         else:
             for t in transactions:
                 print(f"{t.date.strftime('%d-%m-%Y')}: {t.amount} - {t.category} ({t.description})")
+                
+            total_income = sum(t.amount for t in transactions if t.category.lower() == "income")
+            total_expense = sum(t.amount for t in transactions if t.category.lower() == "expense")
+            net_savings = total_income - total_expense
+            
+            print("\nSummary:")
+            print(f"Total Income: ${total_income:.2f}")
+            print(f"Total Expense: ${total_expense:.2f}")
+            print(f"Net Savings: ${net_savings:.2f}")
+        
         return transactions
     except Exception as e:
         print(f"❌ Error retrieving transactions: {e}")
         return []
+    finally:
+        session.close()
     
 def main():
     initialize_db()
     while True:
         print("\n1. Add a new transaction") 
-        print("2, View transaction within a date range")
-        print("3.Exit")
-        choice = input("Enter your choice (1-3):")  
+        print("2. View transactions within a date range")
+        print("3. Exit")
+        choice = input("Enter your choice (1-3): ")  
         
-     
         if choice == "1":
-            date_str = input("Enter the date (YYYY-MM-DD): ")
-            date = datetime.strptime(date_str, "%Y-%m-%d").date()
-            amount = float(input("Enter amount: "))
-            category = input("Enter category (Income/Expense): ")
-            description = input("Enter description: ")
-            add_transaction(date, amount, category, description)
+            add_transaction()
         elif choice == "2":
-            start_date_str = input("Enter the start date (YYYY-MM-DD): ")
-            end_date_str = input("Enter the end date (YYYY-MM-DD): ")
-            start_date = datetime.strptime(start_date_str, "%Y-%m-%d").date()
-            end_date = datetime.strptime(end_date_str, "%Y-%m-%d").date()
-            transactions = get_transactions(start_date, end_date)
+            start_date_str = input("Enter the start date (dd-mm-yyyy): ")
+            end_date_str = input("Enter the end date (dd-mm-yyyy): ")
+            get_transactions(start_date_str, end_date_str)
         elif choice == "3":
-            print("Exiting.....") 
+            print("Exiting...") 
             break
         else:
-            print("Invalid choice. Enter 1, 2 or 3 PLZ" )   
-         
-        
-        
+            print("Invalid choice. PLZ Enter 1, 2, or 3.")
+
 if __name__ == "__main__":
-    main()         
-                    
+    main()
