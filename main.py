@@ -54,5 +54,52 @@ def add_transaction():
         session.close()
 
 
-initialize_db()
-add_transaction()
+def get_transactions(start_date, end_date):
+    try:
+        start_date = datetime.strptime(start_date, "%d-%m-%Y")
+        end_date = datetime.strptime(end_date, "%d-%m-%Y")
+        transactions = session.query(Transaction).filter(Transaction.date >= start_date, Transaction.date <= end_date).all()
+
+        if not transactions:
+            print("⚠️ No transactions found in the given date range.")
+        else:
+            for t in transactions:
+                print(f"{t.date.strftime('%d-%m-%Y')}: {t.amount} - {t.category} ({t.description})")
+        return transactions
+    except Exception as e:
+        print(f"❌ Error retrieving transactions: {e}")
+        return []
+    
+def main():
+    initialize_db()
+    while True:
+        print("\n1. Add a new transaction") 
+        print("2, View transaction within a date range")
+        print("3.Exit")
+        choice = input("Enter your choice (1-3):")  
+        
+     
+        if choice == "1":
+            date_str = input("Enter the date (YYYY-MM-DD): ")
+            date = datetime.strptime(date_str, "%Y-%m-%d").date()
+            amount = float(input("Enter amount: "))
+            category = input("Enter category (Income/Expense): ")
+            description = input("Enter description: ")
+            add_transaction(date, amount, category, description)
+        elif choice == "2":
+            start_date_str = input("Enter the start date (YYYY-MM-DD): ")
+            end_date_str = input("Enter the end date (YYYY-MM-DD): ")
+            start_date = datetime.strptime(start_date_str, "%Y-%m-%d").date()
+            end_date = datetime.strptime(end_date_str, "%Y-%m-%d").date()
+            transactions = get_transactions(start_date, end_date)
+        elif choice == "3":
+            print("Exiting.....") 
+            break
+        else:
+            print("Invalid choice. Enter 1, 2 or 3 PLZ" )   
+         
+        
+        
+if __name__ == "__main__":
+    main()         
+                    
