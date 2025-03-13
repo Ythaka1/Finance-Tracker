@@ -1,79 +1,61 @@
-# Personal Finance Tracker - CLI Application
+# Personal Finance Tracker - README
 
 ## Introduction
-This Personal Finance Tracker is a simple command-line interface (CLI) application that helps users log and manage their financial transactions. It allows users to:
-- Add new transactions (income or expense)
-- View transactions within a specified date range
-- Get a summary of total income, expenses, and net savings
+The Personal Finance Tracker is a Command Line Interface (CLI) application that allows users to log, categorize, and review their financial transactions. It helps users track income and expenses while providing summaries for better financial management.
 
-## Requirements
-- Python 3.x installed on your system
-- Required Python libraries: `SQLAlchemy`
-- A virtual environment (recommended)
+## Prerequisites
+Before using this application, ensure you have the following installed:
+- Python 3.x
+- VS Code (Recommended for development and database management)
+- SQLite database client (Install from VS Code Extensions)
 
 ## Setup Instructions
-### 1. Clone or Download the Project
-If you haven't already, clone the project repository.
+1. **Clone the Repository** (if applicable)
+   ```bash
+   git clone <repository_url>
+   cd Finance-Tracker
+   ```
+2. **Create a Virtual Environment** (Optional but recommended)
+   ```
+   ```
+3. **Install Dependencies**
+      ??????
+   ```
+4. **Run the Application**
+   ```bash
+   python main.py
+   ```
 
-### 2. Set Up a Virtual Environment (Recommended)
-It is best to create a virtual environment for managing dependencies.
-```
-python -m venv venv
-source venv/bin/activate  # On macOS/Linux
-venv\Scripts\activate  # On Windows
-```
+## How to Use
+1. **Adding a Transaction**
+   - Select option `1` from the menu.
+   - Enter the date (dd-mm-yyyy) or press Enter for today's date.
+   - Enter the transaction amount.
+   - Choose a category ('I' for Income, 'E' for Expense).
+   - Optionally, enter a description.
+   - The transaction will be saved in the database.
 
-### 3. Install Dependencies
-```
-(`pip install sqlalchemy`)
+2. **Viewing Transactions in a Date Range**
+   - Select option `2` from the menu.
+   - Enter the start and end dates (dd-mm-yyyy format).
+   - The program will display all transactions within the given range along with a financial summary.
 
-### 4. Run the Application
-To start the finance tracker, run:
-```
-python main.py
-```
+3. **Exiting the Program**
+   - Select option `3` and confirm to exit.
 
-## How to Use the Application
-Once the application starts, you will see a menu:
-```
-1. Add a new transaction
-2. View transactions within a date range
-3. Exit
-```
-
-### Adding a New Transaction
-1. Select `1` from the menu.
-2. Enter the date in `dd-mm-yyyy` format or press Enter for today’s date.
-3. Enter the transaction amount (must be a positive number).
-4. Choose a category:
-   - `I` for Income
-   - `E` for Expense
-5. Enter an optional description.
-6. The transaction is saved, and you will see a confirmation message.
-
-### Viewing Transactions in a Date Range
-1. Select `2` from the menu.
-2. Enter the start date and end date in `dd-mm-yyyy` format.
-3. The application will display all transactions within the given date range, including a summary of total income, expenses, and net savings.
-
-### Exiting the Application
-- Select `3` from the menu  when prompted.
-
-## Database
-The application uses an SQLite database (`finance.db`) to store transactions.
-- Transactions are saved automatically.
-- The database is created when the app runs for the first time.
+## Database Management
+- The application uses SQLite to store transactions in `finance.db`.
+- To view or manage the database, install a **SQLite database client** from the VS Code Extensions Marketplace.
+- Open the `finance.db` file within the extension to browse and query data.
 
 ## Troubleshooting
-- If an error occurs, ensure you have Python 3 installed.
-- Check that you entered dates in `dd-mm-yyyy` format.
-- Ensure SQLAlchemy is installed (`pip install sqlalchemy`).
+- Ensure Python is installed and correctly set up in your system.
+- If you get database errors, delete `finance.db` and restart the program to reinitialize the database.
 
-## Future Enhancements
-- Implement an option to delete transactions.
-- Add data visualization features .
-- Improve user interface.
 
----
-Thank you for using the Personal Finance Tracker! 🚀
+## Contributing
+Feel free to modify and improve the application. Pull requests are welcome!
+
+## License
+This project is open-source and free to use Thank U for using the DEMO.
 
